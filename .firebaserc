@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "portal-wearesosure-dev",
+    "staging": "portal-wearesosure-staging",
+    "production": "portal-wearesosure-production",
+  },
+  "retries": {
+    "runMode": 2,
+    "openMode": 2
+  },
+  "targets": {},
+  "etags": {}
+}

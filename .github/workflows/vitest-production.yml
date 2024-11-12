@@ -1,0 +1,24 @@
+name: 👷🏻‍♂️ portal wearesosure vitest production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PHONE_LIST_URL: https://wearesosure.com/list-phones-make-model
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.9
+      - name: 🏗️ Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 👷‍♂️ Generate site
+        run: pnpm generate
+      - name: 🏃 Vitest run
+        run: pnpm test:ci

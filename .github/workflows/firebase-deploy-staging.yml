@@ -1,0 +1,41 @@
+name: 🔥 portal wearesosure deploy to staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: .
+      ENVIRONMENT: staging
+      BASE_URL: https://portal.staging.wearesosure.com
+      PCA_WEBKEY: ZW92-JM79-DF38-PY85
+      PHONE_LIST_URL: https://staging.wearesosure.com/list-phones-make-model
+      SITE_NAME: Portal SO-SURE (STAGING)
+      FB_API_KEY: AIzaSyAtPMow8VY7yGzAsDAQqWgE_zCqDRPz8j8-tIB8
+      FB_AUTH_DOMAIN: portal-wearesosure-staging.firebaseapp.com
+      FB_PROJECT_ID: portal-wearesosure-staging
+      FB_STORAGE_BUCKET: portal-wearesosure-staging.appspot.com
+      FB_MESSAGING_SENDER_ID: 826323546914
+      FB_APP_ID: 1:826323546914:web:762968cadcb783c7b16b7b
+      FB_MEASUREMENT_ID: G-MXTBMGHSP1
+      NUXT_PUBLIC_SITE_URL: http://localhost:3000
+      NUXT_INDEXABLE: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate site
+        run: pnpm generate
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTAL_WEARESOSURE_STAGING }}'
+          channelId: live
+          projectId: portal-wearesosure-staging
